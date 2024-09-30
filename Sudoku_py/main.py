@@ -125,6 +125,10 @@ def test_compare(sudoku, sudoku2):
     else:
         print("sudoku不等于sudoku2")
 
+def test_externalization(sudoku, sudoku2):
+    print("sudoku: ", sudoku)
+    print("sudoku2: ", sudoku2)
+
 
 if __name__ == "__main__":
     parse = "017903600000080000900000507072010430000402070064370250701000065000030000005601720"
@@ -148,3 +152,6 @@ if __name__ == "__main__":
 
     print("============比较测试============")
     test_compare(sudoku, sudoku2)
+
+    print("============外表化测试============")
+    test_externalization(sudoku, sudoku2)

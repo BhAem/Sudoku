@@ -44,6 +44,11 @@ public class SudokuTest {
         }
     }
 
+    public static void testExternalization(Sudoku sudoku, Sudoku sudoku2) {
+        System.out.println("sudoku: " + sudoku);
+        System.out.println("sudoku2: " + sudoku2);
+    }
+
     public static void main(String[] args) {
         String parse = "017903600000080000900000507072010430000402070064370250701000065000030000005601720";
         Sudoku sudoku = new Sudoku(9, 3, parse);
@@ -70,5 +75,9 @@ public class SudokuTest {
         // 比较测试
         System.out.println("============比较测试============");
         testCompare(sudoku, sudoku2);
+
+        // 外表化测试
+        System.out.println("============外表化测试============");
+        testExternalization(sudoku, sudoku2);
     }
 }

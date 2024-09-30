@@ -12,6 +12,8 @@
 
 （4）比较顺序是否一致
 
+（5）外表化
+
 ## 2. 测试结果
 
 ### 静态类型（Java）
@@ -336,6 +338,60 @@ public static void main(String[] args) {
 sudoku不等于sudoku2
 ```
 
+#### （5）外表化测试
+
+对Sudoku类重写了toString方法：
+
+```java
+// Sudoku.java
+
+public class Sudoku extends Grid implements Cloneable, Comparable<Sudoku> {
+	// ...
+    
+    @Override
+    public String toString() {
+        return "{GRID_SIZE: \"" + this.GRID_SIZE + "\", BOX_SIZE: \"" + this.BOX_SIZE + "\", parse: \"" + this.parse + "\"}";
+    }
+    
+    // ...
+}
+```
+
+测试代码：
+
+```java
+// SudokuTest.java
+
+public static void testExternalization(Sudoku sudoku, Sudoku sudoku2) {
+    System.out.println("sudoku: " + sudoku);
+    System.out.println("sudoku2: " + sudoku2);
+}
+
+public static void main(String[] args) {
+    String parse = "017903600000080000900000507072010430000402070064370250701000065000030000005601720";
+    Sudoku sudoku = new Sudoku(9, 3, parse);
+    sudoku.parseStringToGrid();
+
+    String parse2 = "009000300800400000045000790010740000700060002000015030067000480000001003008000900";
+    Sudoku sudoku2 = new Sudoku(9, 3, parse2);
+    sudoku2.parseStringToGrid();
+    
+    // 外表化测试
+    System.out.println("============外表化测试============");
+    testExternalization(sudoku, sudoku2);
+    
+    // ...
+}
+```
+
+测试结果如下：
+
+```
+============外表化测试============
+sudoku: {GRID_SIZE: "9", BOX_SIZE: "3", parse: "017903600000080000900000507072010430000402070064370250701000065000030000005601720"}
+sudoku2: {GRID_SIZE: "9", BOX_SIZE: "3", parse: "009000300800400000045000790010740000700060002000015030067000480000001003008000900"}
+```
+
 ### 动态类型（Python）
 
 #### （1）推理测试
@@ -595,3 +651,47 @@ if __name__ == "__main__":
 sudoku不等于sudoku2
 ```
 
+#### （5）外表化测试
+
+对Sudoku类重写了\__str__方法：
+
+```java
+class Sudoku(Grid):
+	// ...
+    
+    def __str__(self):
+        return "{GRID_SIZE: \"" + str(self.GRID_SIZE) + "\", BOX_SIZE: \"" + str(self.BOX_SIZE) + "\", parse: \"" + self.parse + "\"}"
+
+    // ...
+```
+
+测试代码：
+
+```java
+def test_externalization(sudoku, sudoku2):
+    print("sudoku: ", sudoku)
+    print("sudoku2: ", sudoku2)
+
+
+if __name__ == "__main__":
+    parse = "017903600000080000900000507072010430000402070064370250701000065000030000005601720"
+    sudoku = Sudoku(9, 3, parse)
+    sudoku.parse_string_to_grid()  # 解析数独字符串
+
+    parse2 = "009000300800400000045000790010740000700060002000015030067000480000001003008000900"
+    sudoku2 = Sudoku(9, 3, parse2)
+    sudoku2.parse_string_to_grid()
+
+    print("============外表化测试============")
+    test_externalization(sudoku, sudoku2)
+    
+    // ...
+```
+
+测试结果如下：
+
+```
+============外表化测试============
+sudoku:  {GRID_SIZE: "9", BOX_SIZE: "3", parse: "017903600000080000900000507072010430000402070064370250701000065000030000005601720"}
+sudoku2:  {GRID_SIZE: "9", BOX_SIZE: "3", parse: "009000300800400000045000790010740000700060002000015030067000480000001003008000900"}
+```
